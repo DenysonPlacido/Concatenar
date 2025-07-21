@@ -4,23 +4,8 @@
     { "src": "api/index.py", "use": "@vercel/python" }
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "static/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "static/favicon.ico"
-    },
-    {
-      "src": "/concatenar",
-      "methods": ["POST"],
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/",
-      "methods": ["GET"],
-      "dest": "api/index.py"
-    }
+    { "src": "/concatenar", "methods": ["POST"], "dest": "api/index.py" },
+    { "src": "/", "methods": ["GET"], "dest": "api/index.py" },
+    { "src": "/static/(.*)", "dest": "/static/$1" }
   ]
 }
