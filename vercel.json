@@ -4,8 +4,7 @@
     { "src": "api/index.py", "use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/concatenar", "methods": ["POST"], "dest": "api/index.py" },
-    { "src": "/", "methods": ["GET"], "dest": "api/index.py" },
-    { "src": "/static/(.*)", "dest": "api/static/$1" }
+    { "src": "/static/(.*)", "dest": "static/$1" },
+    { "src": "/", "methods": ["GET", "POST"], "dest": "api/index.py" }
   ]
 }
