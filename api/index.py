@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-from vercel_flask import VercelHandler  # <- importante
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
@@ -23,8 +22,7 @@ def concatenar():
         grupo_formatado = ','.join(f"{aspas}{v}{aspas}" for v in grupo)
         blocos.append(f"{nome_coluna} IN ({grupo_formatado})")
 
-    resultado = "\n OR ".join(blocos)
+    resultado = " OR ".join(blocos)
     return jsonify({"resultado": resultado})
 
 
-handler = VercelHandler(app)
