@@ -6,6 +6,6 @@
   "routes": [
     { "src": "/concatenar", "methods": ["POST"], "dest": "api/index.py" },
     { "src": "/", "methods": ["GET"], "dest": "api/index.py" },
-    { "src": "/static/(.*)", "dest": "/static/$1" }
+    { "src": "/static/(.*)", "dest": "api/static/$1" }
   ]
 }
