@@ -9,6 +9,10 @@
       "dest": "static/$1"
     },
     {
+      "src": "/favicon.ico",
+      "dest": "static/favicon.ico"
+    },
+    {
       "src": "/concatenar",
       "methods": ["POST"],
       "dest": "api/index.py"
