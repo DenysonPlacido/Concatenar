@@ -14,11 +14,10 @@ def index():
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-image: url("/static/bg.png");
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
       color: #fff;
       backdrop-filter: brightness(0.7);
       min-height: 100vh;
@@ -27,50 +26,44 @@ def index():
     }
 
     .container {
-      max-width: 600px;
+      max-width: 800px;
       margin: auto;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.65);
+      padding: 40px;
+      background-color: rgba(0, 0, 0, 0.6);
       border-radius: 10px;
-      box-shadow: 0 0 10px #000;
+      box-shadow: 0 0 15px #000;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 15px;
-      font-size: 20px;
-    }
-
-    label {
-      font-size: 14px;
+      margin-bottom: 20px;
     }
 
     textarea, input[type="text"] {
       width: 100%;
-      padding: 8px;
-      border-radius: 5px;
+      padding: 10px;
+      border-radius: 6px;
       border: none;
-      margin-bottom: 12px;
-      font-size: 13px;
+      margin-bottom: 15px;
+      font-size: 14px;
     }
 
     textarea {
-      height: 150px;
+      height: 200px;
       resize: vertical;
     }
 
     button {
       margin-top: 5px;
-      margin-right: 8px;
-      padding: 8px 16px;
+      margin-right: 10px;
+      padding: 10px 20px;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       background-color: #e63946;
       color: white;
       cursor: pointer;
       font-weight: bold;
       transition: 0.3s;
-      font-size: 13px;
     }
 
     button:hover {
@@ -81,38 +74,37 @@ def index():
       white-space: pre-wrap;
       background: #f1f1f1;
       color: #222;
-      padding: 12px;
+      padding: 15px;
       border-radius: 6px;
-      margin-top: 15px;
-      min-height: 80px;
+      margin-top: 20px;
+      min-height: 100px;
       font-family: monospace;
-      font-size: 12px;
     }
 
     footer {
       text-align: center;
       font-size: 10px;
       margin-top: auto;
-      padding: 10px;
-      background-color: rgba(0, 0, 0, 0.6);
+      padding: 15px;
+      background-color: rgba(0, 0, 0, 0.7);
       color: #ccc;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Concatenador para Implantação</h2>
+    <h2>Concatenador para os Melhores da Implantação</h2>
 
     <label for="coluna">Nome da Coluna:</label>
     <input type="text" id="coluna" placeholder="Ex: ID_CLIENTE" />
 
-    <label for="entrada">Cole os valores (1 por linha):</label>
+    <label for="entrada">Cole aqui os valores (1 por linha):</label>
     <textarea id="entrada" placeholder="Exemplo:&#10;123&#10;456&#10;789"></textarea>
 
     <div>
-      <button onclick="concatenar('string')">Como String</button>
-      <button onclick="concatenar('number')">Como Número</button>
-      <button onclick="copiarResultado()">Copiar</button>
+      <button onclick="concatenar('string')">Concatenar como String</button>
+      <button onclick="concatenar('number')">Concatenar como Number</button>
+      <button onclick="copiarResultado()">Copiar Resultado</button>
     </div>
 
     <h3>Resultado:</h3>
@@ -148,12 +140,13 @@ def index():
       if (!texto) return;
 
       navigator.clipboard.writeText(texto).then(() => {
-        alert('Resultado copiado!');
+        alert('Resultado copiado com sucesso!');
       });
     }
   </script>
 </body>
 </html>
+
 '''
 
 @app.route('/concatenar', methods=['POST'])
