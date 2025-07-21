@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 
-app = Flask(__name__, static_folder='../static', static_url_path='/static')
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 @app.route('/')
 def index():
@@ -26,42 +26,48 @@ def index():
     }
 
     .container {
-      max-width: 800px;
+      max-width: 500px;
       margin: auto;
-      padding: 40px;
-      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.65);
       border-radius: 10px;
-      box-shadow: 0 0 15px #000;
+      box-shadow: 0 0 10px #000;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-size: 13px;
     }
 
     textarea, input[type="text"] {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       border-radius: 6px;
       border: none;
-      margin-bottom: 15px;
-      font-size: 14px;
+      margin-bottom: 12px;
+      font-size: 12px;
     }
 
     textarea {
-      height: 200px;
+      height: 120px;
       resize: vertical;
     }
 
     button {
       margin-top: 5px;
-      margin-right: 10px;
-      padding: 10px 20px;
+      margin-right: 8px;
+      padding: 8px 14px;
       border: none;
       border-radius: 5px;
       background-color: #e63946;
       color: white;
       cursor: pointer;
+      font-size: 12px;
       font-weight: bold;
       transition: 0.3s;
     }
@@ -74,10 +80,11 @@ def index():
       white-space: pre-wrap;
       background: #f1f1f1;
       color: #222;
-      padding: 15px;
+      padding: 10px;
       border-radius: 6px;
-      margin-top: 20px;
-      min-height: 100px;
+      margin-top: 15px;
+      min-height: 80px;
+      font-size: 12px;
       font-family: monospace;
     }
 
@@ -85,7 +92,7 @@ def index():
       text-align: center;
       font-size: 10px;
       margin-top: auto;
-      padding: 15px;
+      padding: 10px;
       background-color: rgba(0, 0, 0, 0.7);
       color: #ccc;
     }
@@ -102,12 +109,12 @@ def index():
     <textarea id="entrada" placeholder="Exemplo:&#10;123&#10;456&#10;789"></textarea>
 
     <div>
-      <button onclick="concatenar('string')">Concatenar como String</button>
-      <button onclick="concatenar('number')">Concatenar como Number</button>
-      <button onclick="copiarResultado()">Copiar Resultado</button>
+      <button onclick="concatenar('string')">String</button>
+      <button onclick="concatenar('number')">Número</button>
+      <button onclick="copiarResultado()">Copiar</button>
     </div>
 
-    <h3>Resultado:</h3>
+    <h3 style="font-size:14px;margin-top:15px;">Resultado:</h3>
     <div id="resultado"></div>
   </div>
 
@@ -146,7 +153,6 @@ def index():
   </script>
 </body>
 </html>
-
 '''
 
 @app.route('/concatenar', methods=['POST'])
