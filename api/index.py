@@ -10,102 +10,142 @@ html_template = """
     <meta charset="UTF-8">
     <title>Concatenador</title>
     <style>
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
             font-family: Arial, sans-serif;
             background-image: url("/static/bg.png");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            margin: 0;
-            padding: 0;
             color: white;
         }
+
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         .container {
-            max-width: 500px;
-            margin: 30px auto;
+            width: 90%;
+            max-width: 450px;
             background-color: rgba(0, 0, 0, 0.85);
             padding: 20px;
             border-radius: 10px;
+            box-sizing: border-box;
         }
+
         input, textarea, button {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 8px;
             padding: 8px;
             font-size: 14px;
             border-radius: 5px;
+            border: none;
         }
+
         textarea {
             height: 120px;
             resize: vertical;
         }
+
         .btn-group {
             display: flex;
             justify-content: space-between;
             gap: 10px;
             margin: 10px 0;
         }
+
         .btn {
             flex: 1;
             padding: 10px;
             background-color: crimson;
-            border: none;
             color: white;
             cursor: pointer;
         }
+
+        .result-wrapper {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         .result-box {
-            height: 100px;
-            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            height: auto;
             background-color: #222;
             color: #ddd;
             border: 1px solid #444;
-            padding: 8px;
+            padding: 10px;
             border-radius: 5px;
             font-size: 13px;
+            min-height: 90px;
         }
+
         footer {
             text-align: center;
-            font-size: 10px;
-            margin-top: 10px;
+            font-size: 11px;
             color: #ccc;
+            margin: 20px 0 10px 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2 style="text-align:center;">Concatenador para os Melhores da Implantação</h2>
-        <form method="post">
-            <label>Nome da Coluna:</label>
-            <input type="text" name="coluna" value="{{ coluna }}">
+    <div class="wrapper">
+        <div class="container">
+            <h3 style="text-align:center;">Concatenador para os Melhores da Implantação</h3>
+            <form method="post">
+                <label>Nome da Coluna:</label>
+                <input type="text" name="coluna" value="{{ coluna }}">
 
-            <label>Cole aqui os valores (1 por linha):</label>
-            <textarea name="valores">{{ valores }}</textarea>
+                <label>Cole aqui os valores (1 por linha):</label>
+                <textarea name="valores">{{ valores }}</textarea>
 
-            <div class="btn-group">
-                <button name="tipo" value="string" class="btn">String</button>
-                <button name="tipo" value="numero" class="btn">Número</button>
-                <button type="button" onclick="copiarResultado()" class="btn">Copiar</button>
-            </div>
-        </form>
+                <div class="btn-group">
+                    <button name="tipo" value="string" class="btn">String</button>
+                    <button name="tipo" value="numero" class="btn">Número</button>
+                </div>
+            </form>
 
-        {% if resultado %}
-            <strong>Resultado:</strong>
-            <div class="result-box" id="resultado">{{ resultado }}</div>
-        {% endif %}
-
+            {% if resultado %}
+                <label><strong>Resultado:</strong></label>
+                <div class="result-wrapper">
+                    <button class="copy-btn" onclick="copiarResultado()">Copiar</button>
+                    <div class="result-box" id="resultado">{{ resultado }}</div>
+                </div>
+            {% endif %}
+        </div>
         <footer>Desenvolvido por Denyson Deserto Plácido | WhatsApp: 67 99346-4728</footer>
     </div>
 
     <script>
         function copiarResultado() {
-            const resultado = document.getElementById("resultado");
-            if (resultado) {
-                navigator.clipboard.writeText(resultado.innerText);
-                alert("Copiado para a área de transferência!");
-            }
+            const texto = document.getElementById("resultado").innerText;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("Copiado!");
+            });
         }
     </script>
 </body>
 </html>
+
 """
 
 @app.route("/", methods=["GET", "POST"])
@@ -119,10 +159,10 @@ def index():
         tipo = request.form.get("tipo", "string")
         linhas = [linha.strip() for linha in valores.splitlines() if linha.strip()]
         if tipo == "string":
-            valores_formatados = ",".join(f"'{v}'" for v in linhas)
+            valores_formatados = ",\n    ".join(f"'{v}'" for v in linhas)
         else:
-            valores_formatados = ",".join(v for v in linhas)
-        resultado = f"{coluna} IN ({valores_formatados})"
+            valores_formatados = ",\n    ".join(v for v in linhas)
+        resultado = f"{coluna} IN (\n    {valores_formatados}\n)"
     return render_template_string(html_template, resultado=resultado, coluna=coluna, valores=valores)
 
 
