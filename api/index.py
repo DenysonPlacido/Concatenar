@@ -18,7 +18,7 @@ html_template = """
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            color: white;
+            color: rgb(134,134,134);
         }
 
         .wrapper {
@@ -30,25 +30,47 @@ html_template = """
         }
 
         .container {
-            width: 90%;
+            width: 500px;
             max-width: 450px;
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(0, 0, 0, 0.80);
             padding: 20px;
             border-radius: 10px;
             box-sizing: border-box;
         }
 
-        input, textarea, button {
-            width: 100%;
+        input {
+            width: 390px;
+            margin-top: 8px;
+            margin-bottom:8px;
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+        }
+      
+      
+      textarea {
+            width: 390px;
             margin-top: 8px;
             padding: 8px;
             font-size: 14px;
             border-radius: 5px;
             border: none;
         }
+      
+      
+            button {
+            width: 15%;
+            margin-top: 8px;
+           
+            padding: 1px;
+            font-size: 10px;
+            border-radius: 5px;
+            border: none;
+        }
 
         textarea {
-            height: 120px;
+            height: 100px;
             resize: vertical;
         }
 
