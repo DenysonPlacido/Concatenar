@@ -4,121 +4,116 @@ app = Flask(__name__, static_folder='static')
 
 html_template = """
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Concatenar</title>
-    <link rel="icon" href="{{ url_for('static', filename='concatenar.ico') }}">
+    <title>Concatenador Implantação</title>
     <style>
         body {
-            background-image: url('{{ url_for('static', filename='background.png') }}');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             font-family: Arial, sans-serif;
+            background: url('/static/bg.png') no-repeat center center fixed;
+            background-size: cover;
             margin: 0;
             padding: 0;
-            color: white;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 500px;
             margin: 40px auto;
-            background-color: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
         }
-        textarea {
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input, textarea, button {
             width: 100%;
-            height: 120px;
-            resize: none;
-            padding: 10px;
-            font-family: monospace;
-            font-size: 14px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .resultado {
-            background-color: #111;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 14px;
-            color: #0f0;
-            overflow-y: auto;
-            max-height: 200px;
-            white-space: pre-wrap;
-            margin-top: 15px;
-        }
-        button, select, input[type="text"] {
-            padding: 8px 14px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            margin: 5px 0;
-        }
-        .btn {
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #218838;
-        }
-        .copy-btn {
-            float: right;
-            background: #444;
-            border: none;
-            color: white;
-            padding: 6px 10px;
+            margin-bottom: 12px;
+            padding: 8px;
             border-radius: 5px;
-            font-size: 12px;
-            cursor: pointer;
+            border: none;
+            font-size: 14px;
         }
-        .copy-btn:hover {
-            background: #666;
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .buttons button {
+            width: 32%;
+            background-color: #d11b42;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #a91433;
+        }
+
+        .output {
+            background: #222;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            color: #00ff00;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 11px;
+            color: #aaa;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Concatenar  para "Os Melhores da Impantação </h2>
-        <form method="POST">
-            <label>Nome da Coluna:</label><br>
-            <input type="text" name="coluna" value="{{coluna}}" required><br>
+        <h2>Concatenador para os Melhores da Implantação</h2>
+        <form method="post">
+            <label>Nome da Coluna:</label>
+            <input type="text" name="coluna" required>
 
-            <label>Tipo dos Valores:</label><br>
-            <select name="tipo">
-                <option value="string">Texto (com aspas)</option>
-                <option value="number" {% if request.form.get('tipo') == 'number' %}selected{% endif %}>Número (sem aspas)</option>
-            </select><br>
+            <label>Cole aqui os valores (1 por linha):</label>
+            <textarea name="dados" rows="6" required></textarea>
 
-            <label>Valores (1 por linha):</label><br>
-            <textarea name="valores">{{valores}}</textarea><br>
-
-            <button class="btn" type="submit">Concatenar</button>
+            <div class="buttons">
+                <button type="submit" name="tipo" value="string">String</button>
+                <button type="submit" name="tipo" value="numero">Número</button>
+                <button type="button" onclick="copiarResultado()">Copiar</button>
+            </div>
         </form>
 
         {% if resultado %}
-        <div class="resultado" id="resultadoBox">
-            <button class="copy-btn" onclick="copiarResultado()">Copiar</button>
-            {{ resultado }}
-        </div>
+        <p><strong>Resultado:</strong></p>
+        <div class="output" id="resultado">{{ resultado }}</div>
         {% endif %}
+
+        <div class="footer">
+            Desenvolvido por Denyson Deserto Plácido | WhatsApp: 67 99348-4728
+        </div>
     </div>
 
     <script>
         function copiarResultado() {
-            const texto = document.getElementById("resultadoBox").innerText;
+            const texto = document.getElementById("resultado").innerText;
             navigator.clipboard.writeText(texto).then(() => {
-                alert("Texto copiado com sucesso!");
-            }, () => {
-                alert("Erro ao copiar o texto.");
+                alert("Resultado copiado com sucesso!");
             });
         }
     </script>
 </body>
 </html>
+
 """
 
 @app.route("/", methods=["GET", "POST"])
@@ -131,13 +126,20 @@ def index():
         valores = request.form.get("valores", "").strip()
         tipo = request.form.get("tipo", "string")
         linhas = [linha.strip() for linha in valores.splitlines() if linha.strip()]
+        
+        # Formata valores conforme o tipo
         if tipo == "string":
             valores_formatados = [f"'{v}'" for v in linhas]
         else:
             valores_formatados = [v for v in linhas]
-        # Agrupar a cada 10 por linha
-        agrupado = [", ".join(valores_formatados[i:i+10]) for i in range(0, len(valores_formatados), 10)]
-        resultado = f"{coluna} IN (\n  " + ",\n  ".join(agrupado) + "\n)"
+        
+        # Agrupa em linhas com 10 valores por linha
+        grupos = [", ".join(valores_formatados[i:i+10]) for i in range(0, len(valores_formatados), 10)]
+        resultado = f"{coluna} IN (\n  " + ",\n  ".join(grupos) + "\n)"
+
     return render_template_string(html_template, resultado=resultado, coluna=coluna, valores=valores)
 
+
 app = app
+
+
