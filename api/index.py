@@ -170,28 +170,31 @@ html_template = """
 
 """
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    resultado = ""
-    coluna = ""
-    valores = ""
-    if request.method == "POST":
-        coluna = request.form.get("coluna", "").strip()
-        valores = request.form.get("valores", "").strip()
-        tipo = request.form.get("tipo", "string")
-        linhas = [linha.strip() for linha in valores.splitlines() if linha.strip()]
-        
-        # Formata valores conforme o tipo
-        if tipo == "string":
-            valores_formatados = [f"'{v}'" for v in linhas]
-        else:
-            valores_formatados = [v for v in linhas]
-        
-        # Agrupa em linhas com 10 valores por linha
-        grupos = [", ".join(valores_formatados[i:i+10]) for i in range(0, len(valores_formatados), 10)]
-        resultado = f"{coluna} IN (\n  " + ",\n  ".join(grupos) + "\n)"
+    resultado = ''
+    coluna = ''
+    valores = ''
+    if request.method == 'POST':
+        coluna = request.form['coluna'].strip()
+        valores = request.form['valores'].strip().splitlines()
+        tipo = request.form['tipo']
 
-    return render_template_string(html_template, resultado=resultado, coluna=coluna, valores=valores)
+        # Limpa espaços e remove linhas vazias
+        valores = [v.strip() for v in valores if v.strip()]
+        
+        # Adiciona aspas para string
+        if tipo == 'string':
+            valores = [f"'{v}'" for v in valores]
+
+        # Agrupamento em blocos de 1000
+        blocos = [valores[i:i+1000] for i in range(0, len(valores), 1000)]
+        resultado = ' OR\n'.join(
+            [f"{coluna} IN ({', '.join(bloco)})" for bloco in blocos]
+        )
+
+    return render_template_string(html_template, resultado=resultado, coluna=coluna, valores='\n'.join(valores))
+
 
 
 app = app
