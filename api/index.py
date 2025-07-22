@@ -7,112 +7,144 @@ html_template = """
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Concatenador Implantação</title>
+    <title>Concatenador</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: url('/static/bg.png') no-repeat center center fixed;
-            background-size: cover;
+        html, body {
             margin: 0;
             padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-image: url("/static/bg.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: white;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
-            max-width: 500px;
-            margin: 40px auto;
-            background: rgba(0, 0, 0, 0.9);
+            width: 90%;
+            max-width: 450px;
+            background-color: rgba(0, 0, 0, 0.85);
             padding: 20px;
             border-radius: 10px;
-            color: white;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
+            box-sizing: border-box;
         }
 
         input, textarea, button {
             width: 100%;
-            margin-bottom: 12px;
+            margin-top: 8px;
             padding: 8px;
+            font-size: 14px;
             border-radius: 5px;
             border: none;
-            font-size: 14px;
         }
 
-        .buttons {
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn-group {
             display: flex;
             justify-content: space-between;
+            gap: 10px;
+            margin: 10px 0;
         }
 
-        .buttons button {
-            width: 32%;
-            background-color: #d11b42;
+        .btn {
+            flex: 1;
+            padding: 10px;
+            background-color: crimson;
             color: white;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .buttons button:hover {
-            background-color: #a91433;
+        .result-wrapper {
+            position: relative;
+            margin-top: 10px;
         }
 
-        .output {
-            background: #222;
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .result-box {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            height: auto;
+            background-color: #222;
+            color: #ddd;
+            border: 1px solid #444;
             padding: 10px;
             border-radius: 5px;
-            white-space: pre-wrap;
-            overflow-x: auto;
-            color: #00ff00;
             font-size: 13px;
+            min-height: 90px;
         }
 
-        .footer {
+        footer {
             text-align: center;
-            margin-top: 15px;
             font-size: 11px;
-            color: #aaa;
+            color: #ccc;
+            margin: 20px 0 10px 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Concatenador para os Melhores da Implantação</h2>
-        <form method="post">
-            <label>Nome da Coluna:</label>
-            <input type="text" name="coluna" required>
+    <div class="wrapper">
+        <div class="container">
+            <h3 style="text-align:center;">Concatenador para os Melhores da Implantação</h3>
+            <form method="post">
+                <label>Nome da Coluna:</label>
+                <input type="text" name="coluna" value="{{ coluna }}">
 
-            <label>Cole aqui os valores (1 por linha):</label>
-            <textarea name="dados" rows="6" required></textarea>
+                <label>Cole aqui os valores (1 por linha):</label>
+                <textarea name="valores">{{ valores }}</textarea>
 
-            <div class="buttons">
-                <button type="submit" name="tipo" value="string">String</button>
-                <button type="submit" name="tipo" value="numero">Número</button>
-                <button type="button" onclick="copiarResultado()">Copiar</button>
-            </div>
-        </form>
+                <div class="btn-group">
+                    <button name="tipo" value="string" class="btn">String</button>
+                    <button name="tipo" value="numero" class="btn">Número</button>
+                </div>
+            </form>
 
-        {% if resultado %}
-        <p><strong>Resultado:</strong></p>
-        <div class="output" id="resultado">{{ resultado }}</div>
-        {% endif %}
-
-        <div class="footer">
-            Desenvolvido por Denyson Deserto Plácido | WhatsApp: 67 99348-4728
+            {% if resultado %}
+                <label><strong>Resultado:</strong></label>
+                <div class="result-wrapper">
+                    <button class="copy-btn" onclick="copiarResultado()">Copiar</button>
+                    <div class="result-box" id="resultado">{{ resultado }}</div>
+                </div>
+            {% endif %}
         </div>
+        <footer>Desenvolvido por Denyson Deserto Plácido | WhatsApp: 67 99346-4728</footer>
     </div>
 
     <script>
         function copiarResultado() {
             const texto = document.getElementById("resultado").innerText;
             navigator.clipboard.writeText(texto).then(() => {
-                alert("Resultado copiado com sucesso!");
+                alert("Copiado!");
             });
         }
     </script>
 </body>
 </html>
+
 
 """
 
