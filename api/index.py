@@ -7,7 +7,7 @@ html_template = """
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Concatenar para "Os Melhores da Impantação </title>
+    <title>Concatenar</title>
     <link rel="icon" href="{{ url_for('static', filename='concatenar.ico') }}">
     <style>
         body {
@@ -82,7 +82,7 @@ html_template = """
 </head>
 <body>
     <div class="container">
-        <h2>Concatenar valores para cláusula IN</h2>
+        <h2>Concatenar  para "Os Melhores da Impantação </h2>
         <form method="POST">
             <label>Nome da Coluna:</label><br>
             <input type="text" name="coluna" value="{{coluna}}" required><br>
