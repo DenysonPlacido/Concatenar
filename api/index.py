@@ -158,12 +158,19 @@ def index():
         valores = request.form.get("valores", "").strip()
         tipo = request.form.get("tipo", "string")
         linhas = [linha.strip() for linha in valores.splitlines() if linha.strip()]
+        
+        
         if tipo == "string":
-            valores_formatados = ",\n    ".join(f"'{v}'" for v in linhas)
+            valores_formatados = [f"'{v}'" for v in linhas]
         else:
-            valores_formatados = ",\n    ".join(v for v in linhas)
-        resultado = f"{coluna} IN (\n    {valores_formatados}\n)"
+            valores_formatados = [v for v in linhas]
+        
+        
+        grupos = [", ".join(valores_formatados[i:i+10]) for i in range(0, len(valores_formatados), 10)]
+        resultado = f"{coluna} IN (\n  " + ",\n  ".join(grupos) + "\n)"
+
     return render_template_string(html_template, resultado=resultado, coluna=coluna, valores=valores)
 
 
 app = app
+
