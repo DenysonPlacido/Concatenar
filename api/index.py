@@ -1,151 +1,124 @@
-from flask import Flask, request, render_template_string
-import os
+from flask import Flask, render_template_string, request
 
-app = Flask(__name__, static_folder="../static")
+app = Flask(__name__, static_folder='static')
 
 html_template = """
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Concatenador</title>
+    <title>Concatenar IN SQL</title>
+    <link rel="icon" href="{{ url_for('static', filename='concatenar.ico') }}">
     <style>
-        html, body {
+        body {
+            background-image: url('{{ url_for('static', filename='background.png') }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            background-image: url("/static/bg.png");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
             color: white;
         }
-
-        .wrapper {
-            min-height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
         .container {
-            width: 90%;
-            max-width: 450px;
+            max-width: 800px;
+            margin: 40px auto;
             background-color: rgba(0, 0, 0, 0.85);
             padding: 20px;
-            border-radius: 10px;
-            box-sizing: border-box;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
         }
-
-        input, textarea, button {
-            width: 100%;
-            margin-top: 8px;
-            padding: 8px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: none;
-        }
-
         textarea {
+            width: 100%;
             height: 120px;
-            resize: vertical;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin: 10px 0;
-        }
-
-        .btn {
-            flex: 1;
+            resize: none;
             padding: 10px;
-            background-color: crimson;
+            font-family: monospace;
+            font-size: 14px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .resultado {
+            background-color: #111;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #0f0;
+            overflow-y: auto;
+            max-height: 200px;
+            white-space: pre-wrap;
+            margin-top: 15px;
+        }
+        button, select, input[type="text"] {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .btn {
+            background-color: #28a745;
             color: white;
             cursor: pointer;
         }
-
-        .result-wrapper {
-            position: relative;
-            margin-top: 10px;
+        .btn:hover {
+            background-color: #218838;
         }
-
         .copy-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #444;
-            color: #fff;
+            float: right;
+            background: #444;
             border: none;
-            padding: 4px 8px;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 5px;
             font-size: 12px;
-            border-radius: 4px;
             cursor: pointer;
         }
-
-        .result-box {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            height: auto;
-            background-color: #222;
-            color: #ddd;
-            border: 1px solid #444;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 13px;
-            min-height: 90px;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 11px;
-            color: #ccc;
-            margin: 20px 0 10px 0;
+        .copy-btn:hover {
+            background: #666;
         }
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="container">
-            <h3 style="text-align:center;">Concatenador para os Melhores da Implantação</h3>
-            <form method="post">
-                <label>Nome da Coluna:</label>
-                <input type="text" name="coluna" value="{{ coluna }}">
+    <div class="container">
+        <h2>Concatenar valores para cláusula IN</h2>
+        <form method="POST">
+            <label>Nome da Coluna:</label><br>
+            <input type="text" name="coluna" value="{{coluna}}" required><br>
 
-                <label>Cole aqui os valores (1 por linha):</label>
-                <textarea name="valores">{{ valores }}</textarea>
+            <label>Tipo dos Valores:</label><br>
+            <select name="tipo">
+                <option value="string">Texto (com aspas)</option>
+                <option value="number" {% if request.form.get('tipo') == 'number' %}selected{% endif %}>Número (sem aspas)</option>
+            </select><br>
 
-                <div class="btn-group">
-                    <button name="tipo" value="string" class="btn">String</button>
-                    <button name="tipo" value="numero" class="btn">Número</button>
-                </div>
-            </form>
+            <label>Valores (1 por linha):</label><br>
+            <textarea name="valores">{{valores}}</textarea><br>
 
-            {% if resultado %}
-                <label><strong>Resultado:</strong></label>
-                <div class="result-wrapper">
-                    <button class="copy-btn" onclick="copiarResultado()">Copiar</button>
-                    <div class="result-box" id="resultado">{{ resultado }}</div>
-                </div>
-            {% endif %}
+            <button class="btn" type="submit">Concatenar</button>
+        </form>
+
+        {% if resultado %}
+        <div class="resultado" id="resultadoBox">
+            <button class="copy-btn" onclick="copiarResultado()">Copiar</button>
+            {{ resultado }}
         </div>
-        <footer>Desenvolvido por Denyson Deserto Plácido | WhatsApp: 67 99346-4728</footer>
+        {% endif %}
     </div>
 
     <script>
         function copiarResultado() {
-            const texto = document.getElementById("resultado").innerText;
+            const texto = document.getElementById("resultadoBox").innerText;
             navigator.clipboard.writeText(texto).then(() => {
-                alert("Copiado!");
+                alert("Texto copiado com sucesso!");
+            }, () => {
+                alert("Erro ao copiar o texto.");
             });
         }
     </script>
 </body>
 </html>
-
 """
 
 @app.route("/", methods=["GET", "POST"])
@@ -158,19 +131,13 @@ def index():
         valores = request.form.get("valores", "").strip()
         tipo = request.form.get("tipo", "string")
         linhas = [linha.strip() for linha in valores.splitlines() if linha.strip()]
-        
-        
         if tipo == "string":
             valores_formatados = [f"'{v}'" for v in linhas]
         else:
             valores_formatados = [v for v in linhas]
-        
-        
-        grupos = [", ".join(valores_formatados[i:i+10]) for i in range(0, len(valores_formatados), 10)]
-        resultado = f"{coluna} IN (\n  " + ",\n  ".join(grupos) + "\n)"
-
+        # Agrupar a cada 10 por linha
+        agrupado = [", ".join(valores_formatados[i:i+10]) for i in range(0, len(valores_formatados), 10)]
+        resultado = f"{coluna} IN (\n  " + ",\n  ".join(agrupado) + "\n)"
     return render_template_string(html_template, resultado=resultado, coluna=coluna, valores=valores)
 
-
 app = app
-
