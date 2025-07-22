@@ -7,7 +7,7 @@ html_template = """
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Concatenar IN SQL</title>
+    <title>Concatenar para "Os Melhores da Impantação </title>
     <link rel="icon" href="{{ url_for('static', filename='concatenar.ico') }}">
     <style>
         body {
