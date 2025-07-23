@@ -4,7 +4,7 @@
     { "src": "api/index.py", "use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/static/(.*)", "dest": "static/background.png" },
+    { "src": "/Imagem/(.*)", "dest": "Imagem/background.png" },
     { "src": "/", "methods": ["GET", "POST"], "dest": "api/index.py" }
   ]
 }

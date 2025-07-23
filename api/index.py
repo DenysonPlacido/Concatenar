@@ -1,6 +1,6 @@
 from flask import Flask, render_template_string, request
 
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__, Imagem_folder='Imagem')
 
 html_template = """
 <!DOCTYPE html>
@@ -8,14 +8,14 @@ html_template = """
 <head>
     <meta charset="UTF-8">
     <title>Concatenador</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='concatenar.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('Imagem', filename='concatenar.ico') }}">
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            background-image: url("/static/background.png");
+            background-image: url("/Imagem/background.png");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -181,14 +181,14 @@ def index():
         valores = request.form['valores'].strip().splitlines()
         tipo = request.form['tipo']
 
-        # Limpa espaços e remove linhas vazias
+        
         valores = [v.strip() for v in valores if v.strip()]
         
-        # Adiciona aspas para string
+        
         if tipo == 'string':
             valores = [f"'{v}'" for v in valores]
 
-        # Agrupamento em blocos de 1000
+        
         blocos = [valores[i:i+1000] for i in range(0, len(valores), 1000)]
         resultado = ' OR\n'.join(
             [f"{coluna} IN ({', '.join(bloco)})" for bloco in blocos]
