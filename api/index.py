@@ -8,14 +8,14 @@ html_template = """
 <head>
     <meta charset="UTF-8">
     <title>Concatenador</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('Imagem', filename='Concatenar.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='concatenar.ico') }}">
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            background-image: url("/static/background.png");
+            background-image: url("/static/bg.png");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
