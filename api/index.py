@@ -1,6 +1,6 @@
 from flask import Flask, render_template_string, request
 
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__, static_folder="../static", template_folder="../templates")
 
 html_template = """
 <!DOCTYPE html>
@@ -8,14 +8,14 @@ html_template = """
 <head>
     <meta charset="UTF-8">
     <title>Concatenador</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='concatenar.ico') }}">
+    <link rel="icon" href="/static/concatenar.ico" type="image/x-icon">
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            background-image: url("/static/bg.png");
+            background-image: url('/static/bg.png');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
