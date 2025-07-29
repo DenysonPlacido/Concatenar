@@ -15,7 +15,7 @@ html_template = """
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            background-image: url('/static/bg.png');
+            background-image: url('api/static/bg.png');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
