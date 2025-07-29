@@ -1,6 +1,6 @@
 from flask import Flask, render_template_string, request
 
-app = Flask(__name__, static_folder="../static", template_folder="../templates")
+app = Flask(__name__, static_url_path="/static", static_folder="static")
 
 html_template = """
 <!DOCTYPE html>
@@ -170,7 +170,11 @@ html_template = """
 
 
 """
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
 
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
     resultado = ''
