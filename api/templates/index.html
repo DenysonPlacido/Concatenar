@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Concatenador</title>
+    <link rel="icon" href="/static/concatenar.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <h3 style="text-align:center;">Concatenador para os Melhores da Implantação</h3>
+            <form method="post">
+                <label>Nome da Coluna:</label>
+                <input type="text" name="coluna" value="{{ coluna }}">
+                <label>Cole aqui os valores (1 por linha):</label>
+                <textarea name="valores">{{ valores }}</textarea>
+                <div class="btn-group">
+                    <button name="tipo" value="string" class="btn">String</button>
+                    <button name="tipo" value="numero" class="btn">Número</button>
+                </div>
+            </form>
+            {% if resultado %}
+            <label><strong>Resultado:</strong></label>
+            <div class="result-wrapper">
+                <button class="copy-btn" onclick="copiarResultado()">Copiar</button>
+                <div class="result-box" id="resultado">{{ resultado }}</div>
+            </div>
+            {% endif %}
+        </div>
+        <footer>Desenvolvido por Denyson Deserto Plácido | WhatsApp: 67 99346-4728</footer>
+    </div>
+    <script>
+        function copiarResultado() {
+            const texto = document.getElementById("resultado").innerText;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("Copiado!");
+            });
+        }
+    </script>
+</body>
+</html>
