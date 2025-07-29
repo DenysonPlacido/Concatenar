@@ -170,7 +170,7 @@ html_template = """
 
 
 """
-@app.route('/static/<path:filename>')
+@app.route('api/static/<path:filename>')
 def static_files(filename):
     return send_from_directory('static', filename)
 
