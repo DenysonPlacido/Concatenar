@@ -22,6 +22,6 @@ def index():
         resultado = ' OR\n'.join(
             [f"{coluna} IN ({', '.join(bloco)})" for bloco in blocos]
         )
-    return render_template('index.html', resultado=resultado, coluna=coluna, valores='\n'.join(valores))
+    return render_template('api/index.html', resultado=resultado, coluna=coluna, valores='\n'.join(valores))
 
 app = app
