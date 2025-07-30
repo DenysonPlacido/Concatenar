@@ -1,7 +1,6 @@
 html, body {
     margin: 0;
-    padding: 100px;
-    height: 100px;
+  
     overflow: hidden;
     font-family: Arial, sans-serif;
     background-image: url('/api/static/bg.png');
