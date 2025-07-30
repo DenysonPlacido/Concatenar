@@ -4,10 +4,11 @@ html, body {
     height: 95vh;
     overflow: hidden;
     font-family: Arial, sans-serif;
-    background-image: url('/api/static/bg.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+background-image: url('/api/static/bg.png');
+    background-size: cover;           
+    background-repeat: no-repeat;     
+    background-position: center center; 
+    background-attachment: fixed;     
     color: rgb(134,134,134);
 }
 .wrapper {
