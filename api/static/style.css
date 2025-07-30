@@ -4,10 +4,6 @@ html, body {
     height: 100vh;
     overflow: hidden;
     font-family: Arial, sans-serif;
-    /*background-image: url('/api/static/bg.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;*/
     color: rgb(134,134,134);
 }
 
@@ -16,16 +12,16 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain; /* ou 'cover', dependendo do que você preferir */
+    width: auto;
+    height: auto;
+    object-fit: contain; 
     z-index: -2;
 }
 
 .overlay {
     position: relative;
     z-index: 1;
-    background-color: rgba(0,0,0,0.6); /* overlay escuro translúcido */
+    background-color: rgba(0,0,0,0.6); 
     min-height: 100dvh;
 }
 
