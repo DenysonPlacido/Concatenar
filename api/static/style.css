@@ -1,24 +1,27 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
     font-family: Arial, sans-serif;
     background-image: url('/api/static/bg.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     color: rgb(134,134,134);
-}
 .wrapper {
-    min-height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
 }
+
 .container {
-    width: 500px;
-    max-width: 450px;
+    width: 100%;
+    max-width: 500px;
     background-color: rgba(0, 0, 0, 0.80);
     padding: 20px;
     border-radius: 10px;
