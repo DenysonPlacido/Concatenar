@@ -1,7 +1,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100dvh;
+    height: 80dvh;
     overflow: hidden;
     font-family: Arial, sans-serif;
     background-image: url('/api/static/bg.png');
