@@ -9,7 +9,6 @@ html, body {
     background-repeat: no-repeat;
     background-position: center;
     color: rgb(134,134,134);
-}
 .wrapper {
     height: 100vh;
     display: flex;
@@ -21,8 +20,8 @@ html, body {
 }
 
 .container {
-    width: 100%;
-    max-width: 500px;
+    width: 500px;
+    max-width: 450px;
     background-color: rgba(0, 0, 0, 0.80);
     padding: 20px;
     border-radius: 10px;
