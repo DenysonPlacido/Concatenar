@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_from_directory
 
 app = Flask(__name__, static_url_path="/static", static_folder="static", template_folder="templates")
 
-@app.route('/static/<path:filename>')
+@app.route('api/static/<path:filename>')
 def static_files(filename):
     return send_from_directory('static', filename)
 
