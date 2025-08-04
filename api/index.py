@@ -74,7 +74,7 @@ def index():
             if json_input:
                 try:
                     obj = json.loads(json_input)
-                    json_output = json.dumps(obj, indent=1, separators=(',', ': ')).replace("    ", "\t")
+                    json_output = json.dumps(obj, indent=1, separators=(',', ': '), ensure_ascii=False).replace("    ", "\t")
                 except Exception as e:
                     json_error = f"JSON inválido: {e}"
             else:
