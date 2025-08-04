@@ -89,7 +89,7 @@
                 {% endif %}
             </div>
 
-            <!-- Aba Identador JSON -->
+            <!-- Aba Identador JSON
             <div class="tab-content {% if active_tab == 'json' %}active{% endif %}" id="json">
                 <form method="post">
                     <input type="hidden" name="form_type" value="json" />
@@ -108,7 +108,22 @@
                     <button class="copy-btn" onclick="copiarResultado('json_output')">Copiar</button>
                     <pre class="result-box" id="json_output">{{ json_output }}</pre>
                 </div>
-                {% endif %}
+                {% endif %} -->
+
+                <!-- Aba Identador JSON -->
+                 
+                <div class="tab-content {% if active_tab == 'json' %}active{% endif %}" id="json">
+                    <label>Cole ou edite seu JSON abaixo:</label>
+                    <div id="jsoneditor" style="width: 100%; height: 300px; border: 1px solid #ccc; background: white;"></div>
+
+                    <div class="btn-group" style="margin-top: 10px;">
+                        <button type="button" class="btn" onclick="identarJSON()">Identar</button>
+                        <button type="button" class="btn" onclick="copiarJSON()">Copiar</button>
+                    </div>
+
+                    <div id="json-error" style="color: #f55; font-weight: bold; margin-top: 10px;"></div>
+                </div>
+
             </div>
         </div>
 
@@ -116,7 +131,56 @@
             Desenvolvido por Denyson Deserto Plácido 
         </footer>
     </div>
+    <link href="https://cdn.jsdelivr.net/npm/jsoneditor@latest/dist/jsoneditor.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jsoneditor@latest/dist/jsoneditor.min.js"></script>
 
     <script src="/api/static/script.js"></script>
+    
+
+
+<script>
+  let editor = null;
+
+  window.onload = function () {
+    // Inicializa editor JSON
+    const container = document.getElementById("jsoneditor");
+    if (container) {
+      editor = new JSONEditor(container, {
+        mode: 'code',
+        onError: function (err) {
+          document.getElementById("json-error").textContent = "Erro: " + err.message;
+        }
+      });
+    }
+  };
+
+  function identarJSON() {
+    try {
+      const json = editor.get(); // se for inválido, lança erro
+      const formatado = JSON.stringify(json, null, 2);
+      editor.set(JSON.parse(formatado)); // limpa e aplica formatação padrão
+      document.getElementById("json-error").textContent = "JSON válido!";
+    } catch (e) {
+      document.getElementById("json-error").textContent = "JSON inválido: " + e.message;
+    }
+  }
+
+  function copiarJSON() {
+    try {
+      const texto = JSON.stringify(editor.get(), null, 2);
+      navigator.clipboard.writeText(texto);
+      alert("JSON copiado com sucesso!");
+    } catch (e) {
+      alert("Erro ao copiar: " + e.message);
+    }
+  }
+</script>
+
+
+
+
+
 </body>
 </html>
+
+
