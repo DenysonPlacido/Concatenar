@@ -214,6 +214,16 @@ textarea {
     resize: vertical;
 }
 
+.result-box {
+    max-height: 300px;     /* altura máxima do box */
+    overflow-y: auto;      /* adiciona barra de rolagem quando ultrapassar */
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #fff;
+    white-space: pre-wrap; /* mantém quebras de linha */
+    word-break: break-word;
+}
+
 .btn {
     background-color: crimson;
     color: white;
