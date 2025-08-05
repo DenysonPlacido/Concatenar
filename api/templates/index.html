@@ -1,52 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Concatenador</title>
-    <link rel="icon" href="/api/static/contatenar.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/api/static/style.css">
-</head>
-<body>
-    <div class="wrapper">
-        <div class="container">
-            <img class="bg-img" src="/api/static/bg.png" alt="fundo">
-            <h3 style="text-align:center;">Concatenador para os Melhores da Implantação</h3>
-            <form method="post">
-                <label>Nome da Coluna:</label>
-                <input type="text" name="coluna" value="{{ coluna }}">
-                <label>Cole aqui os valores (1 por linha):</label>
-                <textarea name="valores">{{ valores }}</textarea>
-                <div class="btn-group">
-                    <button name="tipo" value="string" class="btn">String</button>
-                    <button name="tipo" value="numero" class="btn">Número</button>
-                </div>
-            </form>
-            {% if resultado %}
-            <label><strong>Resultado:</strong></label>
-            <div class="result-wrapper">
-                <button class="copy-btn" onclick="copiarResultado()">Copiar</button>
-                <div class="result-box" id="resultado">{{ resultado }}</div>
-            </div>
-            {% endif %}
-        </div>
-        <footer>Desenvolvido por Denyson Deserto Plácido | WhatsApp: 67 99346-4728</footer>
-    </div>
-    <script>
-        function copiarResultado() {
-            const texto = document.getElementById("resultado").innerText;
-            navigator.clipboard.writeText(texto).then(() => {
-                //alert("Copiado!");
-            });
-        }
-    </script>
-</body>
-</html> -->
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -66,7 +17,7 @@
                 <button class="tab-btn {% if active_tab == 'json' %}active{% endif %}" onclick="mostrarAba('json')">Identador JSON</button>
             </div>
 
-            <!-- Aba Concatenador -->
+            
             <div class="tab-content {% if active_tab == 'concat' %}active{% endif %}" id="concat">
                 <form method="post">
                     <input type="hidden" name="form_type" value="concat" />
@@ -90,29 +41,7 @@
                 {% endif %}
             </div>
 
-            <!-- Aba Identador JSON
-            <div class="tab-content {% if active_tab == 'json' %}active{% endif %}" id="json">
-                <form method="post">
-                    <input type="hidden" name="form_type" value="json" />
-                    <label>Cole seu JSON aqui:</label>
-                    <textarea name="json_input" placeholder='{"exemplo": true}'>{{ json_input }}</textarea>
-                    <button type="submit" class="btn">Identar JSON</button>
-                </form>
-
-                {% if json_error %}
-                <p style="color: #f55; font-weight: bold;">{{ json_error }}</p>
-                {% endif %}
-
-                {% if json_output %}
-                <label><strong>Resultado:</strong></label>
-                <div class="result-wrapper">
-                    <button class="copy-btn" onclick="copiarResultado('json_output')">Copiar</button>
-                    <pre class="result-box" id="json_output">{{ json_output }}</pre>
-                </div>
-                {% endif %} -->
-
-                <!-- Aba Identador JSON -->
-                 
+                             
                 <div class="tab-content {% if active_tab == 'json' %}active{% endif %}" id="json">
                     <label>Cole ou edite seu JSON abaixo:</label>
                     <div id="jsoneditor" style="width: 100%; height: 300px; border: 1px solid #ccc; background: white;"></div>
