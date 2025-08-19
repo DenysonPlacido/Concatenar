@@ -37,9 +37,16 @@
                 {% if resultado %}
                 <label><strong>Resultado:</strong></label>
                 <div class="result-wrapper">
-                    <button class="copy-btn" onclick="copiarResultado('resultado')">Copiar</button>
-                    <div class="result-box" id="resultado">{{ resultado }}</div>
+                  <div class="result-box" id="resultado">{{ resultado }}</div>
+                  <button class="copy-btn" onclick="copiarResultado('resultado', this)">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M12.668 10.667C12.668 ... Z"></path>
+                    </svg>
+                    <span class="btn-text">Copiar</span>
+                  </button>
                 </div>
+
+
                 {% endif %}
             </div>
 
